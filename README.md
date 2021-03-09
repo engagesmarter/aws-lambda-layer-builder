@@ -18,3 +18,7 @@ Inspired by the [model-zoo scripts](https://github.com/model-zoo/scikit-learn-la
 1. Within this directory include a requirements.txt file that includes the production pip dependencies to install
 1. From the project root run the `build_layer.sh` script
 1. The resulting `layers.csv` file gives the results and ARN for the layer.
+
+## Licence
+
+MIT Licence. Use completely at your own risk. No liability assumed.

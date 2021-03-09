@@ -1,0 +1,1 @@
+Unzipped Library size = 7.8M	/home/matt/Projects/aws-lambda-layer-builder/fastapi/build

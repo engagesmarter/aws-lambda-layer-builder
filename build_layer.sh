@@ -26,13 +26,14 @@ cp ../install-pip-packages.sh .
 
 BUILD_CACHE_DIR="${SCRIPT_DIR}/${DIRECTORY_NAME}/build"
 OUTPUT_CSV="layers.csv"
+PACKAGE_SIZE="package_size.txt"
 
 REQUIREMENTS=$(tr '\n' ' ' < requirements.txt)
 
 echo "Will install requirements: ${REQUIREMENTS}"
 
 echo
-read -p "Input layer name : " LAYER_NAME
+read -p "Layer name : " LAYER_NAME
 
 echo "Will use layer name: ${LAYER_NAME}"
 
@@ -95,6 +96,8 @@ do
         "lambci/lambda:build-python$p" \
         /var/task/install-pip-packages.sh "${REQUIREMENTS}" /var/task/build/python/lib/python${p}/site-packages
 
+    SIZE=$(du -sh ${BUILD_CACHE_DIR})    
+
     layer_name=$(echo "python-${p}-${LAYER_NAME}" | tr '.' '-')
     echo "Layer name to publish - ${layer_name}"
 
@@ -134,13 +137,16 @@ do
         echo "${p},${r},${layer_arn}:${layer_version_number}" >> "${OUTPUT_CSV}"
     done
 
-    echo
-    echo "Library size ..."
-    du -sh ${BUILD_CACHE_DIR}
-
     # Clean out cache for the next layer.
     rm -rf ${BUILD_CACHE_DIR}/*
+
+    echo 
+    echo "Unzipped Library size = ${SIZE}"
+    echo "Unzipped Library size = ${SIZE}" >> "${PACKAGE_SIZE}"
 
 done
 
 rm -rf ${BUILD_CACHE_DIR}
+
+echo
+echo "Done."

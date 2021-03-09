@@ -1,0 +1,2 @@
+Python version,region,arn
+3.8,eu-west-2,arn:aws:lambda:eu-west-2:942847151424:layer:python-3-8-pandas-numpy-scipy-2020-03:
